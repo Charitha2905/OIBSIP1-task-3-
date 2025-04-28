@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+        .converter {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 400px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .converter input, .converter select, .converter button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1em;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="converter">
+    <h2>Temperature Converter</h2>
+
+    <input type="text" id="tempInput" placeholder="Enter temperature">
+
+    <select id="unitSelect">
+        <option value="Celsius">Celsius (°C)</option>
+        <option value="Fahrenheit">Fahrenheit (°F)</option>
+        <option value="Kelvin">Kelvin (K)</option>
+    </select>
+
+    <button onclick="convertTemp()">Convert</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function convertTemp() {
+    const tempInput = document.getElementById('tempInput').value.trim();
+    const unitSelect = document.getElementById('unitSelect').value;
+    const resultDiv = document.getElementById('result');
+
+    // Validate input
+    if (tempInput === '' || isNaN(tempInput)) {
+        resultDiv.innerHTML = "❗ Please enter a valid number.";
+        return;
+    }
+
+    const temp = parseFloat(tempInput);
+    let convertedTemp = '';
+    let output = '';
+
+    if (unitSelect === "Celsius") {
+        const toFahrenheit = (temp * 9/5) + 32;
+        const toKelvin = temp + 273.15;
+        output = `${temp}°C = ${toFahrenheit.toFixed(2)}°F<br>${temp}°C = ${toKelvin.toFixed(2)}K`;
+    }
+    else if (unitSelect === "Fahrenheit") {
+        const toCelsius = (temp - 32) * 5/9;
+        const toKelvin = (temp - 32) * 5/9 + 273.15;
+        output = `${temp}°F = ${toCelsius.toFixed(2)}°C<br>${temp}°F = ${toKelvin.toFixed(2)}K`;
+    }
+    else if (unitSelect === "Kelvin") {
+        const toCelsius = temp - 273.15;
+        const toFahrenheit = (temp - 273.15) * 9/5 + 32;
+        output = `${temp}K = ${toCelsius.toFixed(2)}°C<br>${temp}K = ${toFahrenheit.toFixed(2)}°F`;
+    }
+
+    resultDiv.innerHTML = output;
+}
+</script>
+
+</body>
+</html>
